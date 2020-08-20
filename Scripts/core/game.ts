@@ -1,3 +1,11 @@
+/*  File Name: game.ts
+  Author Name: Anuben Keshavala
+  File Description: Dice Roller
+  COMP125-Final Test
+  Student ID: 301120629
+  Date: August 19, 2020 
+*/
+  
 let Game = (function(){
 
     // variable declarations
@@ -5,10 +13,12 @@ let Game = (function(){
     let stage:createjs.Stage;
     
     let assets: createjs.LoadQueue;
-
-    let exampleLabel: UIObjects.Label;
-    let exampleButton: UIObjects.Button;    
-
+    let diceBackground: Core.GameObject;
+    let leftDiceValue: UIObjects.Label; 
+    let leftDice: UIObjects.Button;
+    let rightDice: UIObjects.Button;
+    let rightDiceValue: UIObjects.Label;
+    let rollButton: UIObjects.Button;
     let assetManifest = 
     [
         {id:"1", src:"./Assets/images/1.png"},
@@ -71,16 +81,41 @@ let Game = (function(){
     function Main():void
     {
         console.log(`%c Main Function`, "color: grey; font-size: 14px; font-weight: bold;");
+        diceBackground = new Core.GameObject("background", Config.Game.CENTER_X, Config.Game.CENTER_Y, true );
+        stage.addChild(diceBackground);
+        
+        leftDice = new UIObjects.Button("1", Config.Game.CENTER_X - 200, Config.Game.CENTER_Y - 100, true);
+        stage.addChild(leftDice);
 
-        exampleLabel = new UIObjects.Label("An Example Label", "40px", "Consolas", "#000000", Config.Game.CENTER_X, Config.Game.CENTER_Y, true);
-        stage.addChild(exampleLabel);
+        leftDiceValue = new UIObjects.Label("1", "40px", "Consolas", "#ffffff", Config.Game.CENTER_X - 200, Config.Game.CENTER_Y+40, true);
+        stage.addChild(leftDiceValue);
 
-        exampleButton = new UIObjects.Button("button", Config.Game.CENTER_X, Config.Game.CENTER_Y + 100, true);
-        stage.addChild(exampleButton);
+        rightDice = new UIObjects.Button("2", Config.Game.CENTER_X + 200, Config.Game.CENTER_Y - 100, true);
+        stage.addChild(rightDice);
 
-        exampleButton.on("click", ()=>{
+        rightDiceValue = new UIObjects.Label("2", "40px", "Consolas", "#ffffff",Config.Game.CENTER_X + 200, Config.Game.CENTER_Y+40, true);
+        stage.addChild(rightDiceValue);
+
+        rollButton = new UIObjects.Button("rollButton", Config.Game.CENTER_X, Config.Game.CENTER_Y + 170, true);
+        stage.addChild(rollButton);
+
+        //rollButton to roll two dices with different values
+        rollButton.on("click", ()=>{
             console.log("example button clicked");
+            let leftrandomnumber = Math.floor(Util.Mathf.RandomRange(1, 6));
+            let rightrandomnumber = Math.floor(Util.Mathf.RandomRange(1, 6));
+            
+            leftDiceValue.setText(`${leftrandomnumber.toString()}`);
+            rightDiceValue.setText(`${rightrandomnumber.toString()}`);
+
+            let leftimage = assets.getResult(leftrandomnumber.toString()) as HTMLImageElement;
+            let rightimage = assets.getResult(rightrandomnumber.toString()) as HTMLImageElement;
+
+            leftDice.image = leftimage;
+            rightDice.image = rightimage;
         });
+       
+        
     }
 
     window.addEventListener('load', Preload);
