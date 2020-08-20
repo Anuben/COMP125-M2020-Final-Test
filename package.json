@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "COMP125 - Final Test Template Project",
   "main": "game.js",
-  "author": "Tom Tsiliopoulos",
+  "author": "Anuben Keshavala",
   "license": "MIT",
   "dependencies": {
     "createjs": "^1.0.1",
